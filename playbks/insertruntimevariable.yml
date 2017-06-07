@@ -1,0 +1,6 @@
+---
+- hosts: server1
+  become: true
+  tasks:
+  - name: insert variable
+    lineinfile: dest=/etc/mysql/mysql.conf.d/mysqld.cnf regexp=^bind-address line="bind_address= {{ansible_eth0.ipv4.address}}"

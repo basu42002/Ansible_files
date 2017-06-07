@@ -1,0 +1,12 @@
+---
+- hosts: server1
+  become: true
+  gather_facts: false
+  tasks:
+  - shell: "ls dumb" 
+    register: dumbvar
+   # ignore_errors: false
+    failed_when: "'cannot' not in dumbvar.stderr"
+
+  - debug:
+     msg: "{{dumbvar}}"

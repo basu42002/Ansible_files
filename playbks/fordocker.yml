@@ -1,0 +1,8 @@
+---
+- name: for docker
+  docker:
+  name: ansible
+  state: present
+  command: hostname
+
+  

@@ -1,0 +1,20 @@
+---
+- hosts: server1
+  become: true
+  tasks:
+  - name: install python mysqldb
+    apt: name={{item}} state=present update_cache=yes
+    with_items:
+    - python-mysqldb
+
+  - name: create db
+    mysql_db: name=demodb state=present
+
+  - name: create user
+    mysql_user: name=basu password=demo state=present priv=demodb.*:ALL host='%'
+  #  mysql_user: name=basu password=demo priv=demodb.*:ALL hosts='%' state=present
+    notify: restart mysql
+
+  handlers:
+  - name: restart mysql
+    service: name=mysql state=restarted 

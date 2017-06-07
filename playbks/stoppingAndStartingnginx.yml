@@ -1,0 +1,47 @@
+---
+- hosts: server1
+  become: true
+
+  tasks:
+#  - apt: name={{item}} state=present update_cache=yes
+ #   with_items:
+  #  - python-httplib2
+
+  - service: name=nginx state=stopped
+  - wait_for: port=80 state=drained
+
+#- hosts: server1
+ # become: true
+  #tasks:
+  - name: restart nginx
+    service: name=nginx state=restarted
+ # - name: check if port 80 is runnig
+  - wait_for: port=80 state=started timeout=10
+
+  - name: verify end to end response
+    uri: url=http://{{item}} return_content=yes
+    with_items: "{{groups.server1}}"
+   # uri: url=http://localhost return_content=yes
+    register: nginx_index_example
+    
+  - name: just execte command
+    #command: service nginx status
+    copy: src=/home/ubuntu/ansible/demo dest=/home/ubuntu/ansible/sampledemo/ mode=0755
+    when: "'Welcome to nginx!' in item.content"
+    with_items: "{{nginx_index_example.results}}"
+
+  - name: run ls command
+    command: ls
+    register: all_dirs
+
+#  - file: /home/ubuntu/ansible/{{item}}
+
+  - fail: msg="not found"
+    when: "'Welcome to nginx!' not in item.content"
+   # when: "Welcome not in item.content"
+    with_items: "{{nginx_index_example.results}}"
+
+  - fail: msg="status not 200{{item.item}}"
+    when: "'nginx/1.10.0 (Ubuntu)' not in item.server"
+    with_items: "{{nginx_index_example.results}}"
+

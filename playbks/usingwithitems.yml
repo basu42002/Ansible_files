@@ -1,0 +1,12 @@
+---
+- name: using with items
+  hosts: server1
+  become: true
+  tasks:
+  - name: loop through each package
+    apt: name={{item}} state=absent update_cache=true
+
+    with_items:
+    - apache2
+    - libapache2-mod-wsgi
+    - python-pip

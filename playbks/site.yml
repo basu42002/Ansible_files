@@ -1,0 +1,10 @@
+---
+- hosts: server1
+  become: true
+  gather_facts: false
+  tasks:
+  - apt: update_cache=yes cache_valid_time=86400
+
+- include: getAllStatus.yml 
+- include: stoppingAndStartingnginx.yml
+- include: usingShellRegisterWithItemsWhen.yml

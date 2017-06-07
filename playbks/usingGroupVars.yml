@@ -1,0 +1,10 @@
+---
+- hosts: server1
+  become: true
+ 
+  roles:
+#  - role: usinggroupvars
+#    dp1: "{{demo1}}"
+#    dp2: "{{demo2}}"
+
+  - {role: usinggroupvars, dp1: "{{demo1}}", dp2: "{{demo2}}"}

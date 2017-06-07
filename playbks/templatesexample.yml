@@ -1,0 +1,10 @@
+---
+- hosts: server1
+  become: true
+  tasks:
+  - name: copy using copy
+    copy: src=/home/ubuntu/ansible/ansible.cfg dest=/home/ubuntu/ansible/templexample/
+
+  - name: copy using template
+    template: src=/home/ubuntu/ansible/dev dest=/home/ubuntu/ansible/templexample mode=0755
+

@@ -1,0 +1,14 @@
+---
+# tasks file for createnginxrole
+- name: install nginx now
+  apt: name=nginx state=present update_cache=yes
+
+- name: start the nginx
+  service: name=nginx state=started enabled=yes
+  
+- name: check nginx status
+  command: service nginx status
+
+- wait_for: port=80 state=started timeout=5
+
+  notify: restart nginx

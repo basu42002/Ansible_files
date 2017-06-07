@@ -1,0 +1,7 @@
+---
+# tasks file for usinggroupvars
+
+- name: display values
+  debug:
+   msg: "values from group_vars all file:{{dp1}} & {{dp2}}
+   values demo values:{{demo1}} and {{demo2}}"

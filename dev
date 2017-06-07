@@ -1,0 +1,5 @@
+[server1]
+localhost ansible_connection=local
+
+[server2]
+172.17.0.2

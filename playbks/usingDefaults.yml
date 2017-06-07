@@ -1,0 +1,7 @@
+---
+- hosts: server1
+  become: true
+
+  roles:
+  #- defaultsexample
+  - {role: defaultsexample, app_name: mysql, state: started}

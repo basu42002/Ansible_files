@@ -1,0 +1,17 @@
+---
+- hosts: server1
+  become: true
+  tasks: 
+  - name: isntall mysql-server
+    apt: name=mysql-server state=present update_cache=yes
+ 
+  - name: check if mysql started
+    service: name=mysql state=started enabled=yes
+
+  - name: change specific value on conf file
+    lineinfile: dest=/etc/mysql/mysql.conf.d/mysqld.cnf regexp=^bind-address line="bind-address = 0.0.0.0"
+    notify: restart mysql
+
+  handlers:
+  - name: restart mysql
+    service: name=mysql state=restarted

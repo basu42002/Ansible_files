@@ -1,0 +1,14 @@
+---
+- hosts: server1
+  become: true
+  tasks:
+  - name: check the nginx status
+    command: service nginx status
+  - name: verify port 80
+    wait_for: port=80 timeout=1
+
+#  - name: check mysql status
+  #  command: service mysql status
+#  - name: verify port 3306
+#    command: service mysql status
+#  - wait_for: port=3306 timeout=1

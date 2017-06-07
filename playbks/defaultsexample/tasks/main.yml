@@ -1,0 +1,5 @@
+---
+# tasks file for defaultsexample
+#- service: name=nginx state=started enabled=yes
+- service: name={{app_name}} state={{state}} enabled=yes
+- wait_for: port=80 state=started timeout=5

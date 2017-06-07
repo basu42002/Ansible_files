@@ -1,0 +1,5 @@
+---
+# defaults file for usingShellRegisterWithItemsWhen.yml
+listofelements:
+ notifyhandlers.yml:
+  msg: "this is the file"

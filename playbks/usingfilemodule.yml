@@ -1,0 +1,16 @@
+---
+- hosts: server1
+  become: true
+
+  tasks:
+  - name: delete the file from apache2 folder
+    file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
+
+  - name: symbolic link file from sites-available
+    file: src=/etc/apache2/sites-available/000-default.conf dest=/etc/apache2/sites-enabled/basu-default.conf state=link
+    #file: src=/etc/apache2/sites-available/000-default.conf dest=/etc/apache2/sites-enabled/basu.conf state=file
+    notify: restart apache2
+
+  handlers: 
+  - name: restart apache2
+    service: name=apache2 state=restarted enabled=yes 

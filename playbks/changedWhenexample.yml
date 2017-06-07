@@ -1,0 +1,12 @@
+---
+- hosts: server1
+  become: true
+  gather_facts: false
+  tasks:
+  - name: run command
+    shell: ls
+    register: tempvar
+    changed_when: "'changedWhenexample.yml' not in tempvar.stdout_lines"
+
+  - debug:
+     msg: "{{vars}}"

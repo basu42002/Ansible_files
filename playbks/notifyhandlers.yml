@@ -1,0 +1,19 @@
+---
+- hosts: server1
+  become: true
+  tasks:
+  - name: install apache2
+    apt: name={{item}} state=present update_cache=yes
+    with_items:
+    - apache2
+    - libapache2-mod-wsgi
+
+  - name: check if apache running
+    service: name=apache2 state=started enabled=yes
+  - name: check if mod wsgi enabled
+    apache2_module: name=wsgi state=present
+    notify: check nginx
+
+  handlers:
+  - name: check nginx
+    service: name=apache2 state=restarted

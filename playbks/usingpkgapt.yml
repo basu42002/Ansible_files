@@ -1,0 +1,6 @@
+---
+- name: This used package manager apt
+  hosts: server1
+  tasks:
+  - name: now proceding with installation of nginx
+    apt: name=nginx state=absent update_cache=yes

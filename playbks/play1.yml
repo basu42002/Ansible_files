@@ -1,0 +1,6 @@
+---
+- name: invoke all hosts
+  hosts: all
+  tasks:
+  - name: get hostname
+    command: hostname

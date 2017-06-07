@@ -1,0 +1,17 @@
+---
+# tasks file for withdictexample
+# service: name=nginx state=started enabled=yes
+#- wait_for: port="{{item.value.frontend}}" state=started timeout=5
+
+#- copy: src=/home/ubuntu/ansible/dev dest=/home/ubuntu/ansible/{{item.key}} mode=0777 
+ # with_dict: mainsite
+#- name: display msg
+- debug:
+   msg: "user is:{{item.key}} and name: {{item.value.name}}"
+  with_dict: "{{users}}"
+
+- debug:
+   msg: "{{item.value.telephone}}"
+  with_dict: "{{users}}"
+
+

@@ -1,0 +1,17 @@
+---
+# tasks file for usingShellRegisterWithItemsWhen.yml
+- name: register variable using shell
+  shell: ls -1 /home/ubuntu/ansible/playbks/
+  register: shellvariable
+  tags: ['registervar']
+
+- name: copy files
+  copy: src=/home/ubuntu/ansible/playbks/{{item}} dest=/home/ubuntu/newdir/ mode=0755
+  with_items: "{{shellvariable.stdout_lines}}"
+  when: "item in listofelements"
+
+  tags: [ 'usingShellRegisterWithItemsWhentag' ]
+
+- debug:
+   msg: "copied the {{item.key}} and {{item.value.msg}}"
+  with_dict: "{{listofelements}}"

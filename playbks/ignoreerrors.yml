@@ -1,0 +1,23 @@
+---
+- hosts: server1
+  become: true
+  gather_facts: false
+  
+  tasks:
+  - command: ls dumb
+    register: dumbvar
+    ignore_errors: yes
+   # failed_when: "'true' not in dumbvar.failed"
+  #- fail: msg="failed"
+   # when: "'cannot' in item.stderr"
+   # with_items: "{{dumbvar.results}}"
+   
+    #ignore_errors: yes
+
+  - command: /usr/bin/example-command -x -y -z
+    register: command_result
+    ignore_errors: True
+
+  - name: fail the play if the previous command did not succeed
+    fail: msg="the command failed"
+    when: "'FAILED' in command_result.stderr"

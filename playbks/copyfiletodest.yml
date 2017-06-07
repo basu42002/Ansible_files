@@ -1,0 +1,22 @@
+---
+- hosts: server1
+  become: true
+  tasks:
+  - name: install nginx
+    apt: name=nginx state=present update_cache=yes
+   
+  - name: check if nginx running
+    service: name=nginx state=started enabled=yes
+
+  - name: copy a file
+    copy: src=/home/ubuntu/ansible/dev dest=/home/ubuntu/ansible/samplefilecopy/ mode=0777 
+    notify: restart nginx
+  - name: check the status
+    service: name=nginx state=stopped
+    notify: restart nginx
+
+#  - name: delete the file
+ #   file: path=/home/ubuntu/ansible/samplefilecopy state=absent
+  handlers:
+  - name: restart nginx
+    service: state=restarted name=nginx
